@@ -1,0 +1,23 @@
+{
+  apps : [{
+    name        : "single",
+    script      : "./app/app.js",
+    watch       : true,
+    env: {
+      "NODE_ENV": "development",
+      "PORT"	: 5679
+    },
+    env_production : {
+       "NODE_ENV": "production"
+    }
+  },{
+    name       : "cluster",
+    script     : "./app/app.js",
+    instances  : 2,
+    exec_mode  : "cluster",
+    env: {
+        "NODE_ENV": "development",
+        "PORT"	: 5680
+    }
+  }]
+}

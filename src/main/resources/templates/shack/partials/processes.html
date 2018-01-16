@@ -1,0 +1,7 @@
+<#list processes as item>
+	<ul>
+		<li>${item.pm_id}
+		<li>${item.name}
+	</ul>
+	<#else> There are no processes running in PM2.
+</#list>

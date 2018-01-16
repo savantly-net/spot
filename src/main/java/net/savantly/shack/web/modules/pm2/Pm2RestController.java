@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import net.savantly.pm2j.Pm2Connector;
 import net.savantly.pm2j.Pm2ProcessInfo;
 
-@RequestMapping("/pm2")
+@RequestMapping("/rest/modules/pm2")
 @RestController
 public class Pm2RestController {
 	

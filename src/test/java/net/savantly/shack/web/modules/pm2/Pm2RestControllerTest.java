@@ -40,7 +40,7 @@ public class Pm2RestControllerTest {
 
 	@Test
 	public void getPm2Status() throws Exception {
-		mvc.perform(get("/pm2/status")).andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+		mvc.perform(get("/rest/modules/pm2/status")).andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
 	}
 
 }

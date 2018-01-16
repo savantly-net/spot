@@ -1,7 +1,7 @@
 package net.savantly.shack.web;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,8 +15,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import net.savantly.sprout.autoconfigure.controller.HomeController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes={ShackWebApplication.class})
@@ -38,7 +36,7 @@ public class ShackWebApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		HomeController bean = ctx.getBean(HomeController.class);
+		ShackWebApplication bean = ctx.getBean(ShackWebApplication.class);
 		log.debug("{}", bean);
 	}
 	
