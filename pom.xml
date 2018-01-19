@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>net.savantly.sprout</groupId>
 		<artifactId>web-parent</artifactId>
-		<version>1.4.1-SNAPSHOT</version>
+		<version>1.5.0-SNAPSHOT</version>
 		<relativePath />
 	</parent>
 
@@ -22,7 +22,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<sprout.version>1.4.1-SNAPSHOT</sprout.version>
+		<sprout.version>1.5.0-SNAPSHOT</sprout.version>
+		<log4j.version>2.9.0</log4j.version>
 	</properties>
 
 	<dependencies>
@@ -30,11 +31,15 @@
 		<dependency>
 			<groupId>net.savantly</groupId>
 			<artifactId>pm2j</artifactId>
-			<version>1.0.0-RELEASE</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-devtools</artifactId> 
 			<scope>runtime</scope> </dependency> -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>

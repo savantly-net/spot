@@ -1,12 +1,8 @@
-const express = require('express')
-const app = express()
-
 var port = process.env.PORT;
+var http = require('http');
 
-app.get('/', function (req, res) {
-  res.send('Hello World!')
-})
-
-app.listen(port, function () {
-  console.log('Example app listening on port ' + port)
-})
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
+}).listen(port, "127.0.0.1");
+console.log('Server running at http://127.0.0.1:'+port+'/');

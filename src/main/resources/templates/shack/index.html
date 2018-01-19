@@ -1,9 +1,13 @@
 <#import "/spring.ftl" as spring />
-<div id="schackContainer">
+<div id="shackContainer">
 	<h1>PM2 Process</h1>
 	
 	<nav>
-		<button class="mat-raised-button" onclick="shack.loadProcessInfo();">Load</button>
+		<button class="mat-raised-button" onclick="shack.loadProcessInfo();">Status</button>
+		<button class="mat-raised-button" onclick="shack.startPm2();">Start Ecosystem</button>
+		<button class="mat-raised-button" onclick="shack.startPm2Api();">Start PM2 Api</button>
+		<button class="mat-raised-button" onclick="shack.stopPm2();">Stop</button>
+		<button class="mat-raised-button" onclick="shack.killPm2();">Kill</button>
 	</nav>
 	
 	<div class="shack-processes"></div>
@@ -17,17 +21,80 @@
 		var processInfoElement = document.querySelector('.shack-processes');
 		
 		this.loadProcessInfo = function(){
-			var loaderKey = 'pLoader';
-			sprout.showLoader({key: loaderKey});
+			sprout.showLoader({fullScreen: true});
 			sprout.zone.run(function(){
 				sprout.http.get('./rest/modules/shack/processes', {responseType: 'text'}).subscribe(function(response){
 					processInfoElement.innerHTML = response;
-					sprout.hideLoader({key: loaderKey});
+					sprout.hideLoader();
+				}, function(err){
+					console.error(err);
+					processInfoElement.innerHTML = err.error;
+					sprout.hideLoader();
 				});
 			});
 		};
 		
+		this.startPm2 = function(){
+			sprout.showLoader({fullScreen: true});
+			sprout.zone.run(function(){
+				sprout.http.get('./rest/modules/shack/start', {responseType: 'text'}).subscribe(function(response){
+					processInfoElement.innerHTML = response;
+					sprout.hideLoader();
+				});
+			});
+		};
 		
+		this.startPm2Api = function(){
+			sprout.showLoader({fullScreen: true});
+			sprout.zone.run(function(){
+				sprout.http.get('./rest/modules/shack/startApi', {responseType: 'text'}).subscribe(function(response){
+					processInfoElement.innerHTML = response;
+					sprout.hideLoader();
+				});
+			});
+		};
+
+		this.showDetails = function(id){
+			var detailElement = document.querySelector('#pm2_'+id);
+			sprout.showLoader({fullScreen: true});
+			sprout.zone.run(function(){
+				sprout.http.get('./rest/modules/shack/show/'+id, {responseType: 'text'}).subscribe(function(response){
+					detailElement.innerHTML = response;
+					sprout.hideLoader();
+				});
+			});
+		};
+
+		this.showLog = function(id){
+			var detailElement = document.querySelector('#pm2_'+id);
+			sprout.showLoader({fullScreen: true});
+			sprout.zone.run(function(){
+				sprout.http.get('./rest/modules/shack/logs/'+id, {responseType: 'text'}).subscribe(function(response){
+					detailElement.innerHTML = response;
+					sprout.hideLoader();
+				});
+			});
+		};
+		
+		this.stopPm2 = function(){
+			sprout.showLoader({fullScreen: true});
+			sprout.zone.run(function(){
+				sprout.http.get('./rest/modules/shack/stop', {responseType: 'text'}).subscribe(function(response){
+					processInfoElement.innerHTML = response;
+					sprout.hideLoader();
+				});
+			});
+		};
+		
+		this.killPm2 = function(){
+			sprout.showLoader({fullScreen: true});
+			sprout.zone.run(function(){
+				sprout.http.get('./rest/modules/shack/kill', {responseType: 'text'}).subscribe(function(response){
+					processInfoElement.innerHTML = response;
+					sprout.hideLoader();
+				});
+			});
+		};
 	}
 	window.shack = new Shack();
 </script>

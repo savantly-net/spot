@@ -13,6 +13,7 @@ public class Pm2Configuration {
 	private String executablePath;
 	private String home;
 	private String config;
+	private String pm2HttpApi = "http://0.0.0.0:9615";
 	
 	@Bean
 	public Pm2Connector pm2Connector(){
@@ -36,6 +37,14 @@ public class Pm2Configuration {
 	}
 	public void setConfig(String config) {
 		this.config = config;
+	}
+
+	public String getPm2HttpApi() {
+		return pm2HttpApi;
+	}
+
+	public void setPm2HttpApi(String pm2HttpApi) {
+		this.pm2HttpApi = pm2HttpApi;
 	}
 	
 }
