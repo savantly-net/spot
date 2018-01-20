@@ -49,8 +49,6 @@ public class ShackController {
 	@RequestMapping("/")
 	public ModelAndView index() {
 		ModelAndView modelAndView = new ModelAndView("shack/index");
-		ResponseEntity<JsonNode> apiResponse = queryApi();
-		modelAndView.addObject("apiRunning", !(apiResponse == null));
 		modelAndView.addObject("config", config.getConfig());
 		return modelAndView;
 	}
@@ -83,9 +81,7 @@ public class ShackController {
 	@RequestMapping("/start")
 	public ModelAndView start() {
 		pm2.startPm2(config.getConfig());
-		ModelAndView modelAndView = new ModelAndView("shack/partials/processes");
-		modelAndView.addObject("processes", pm2.getPm2Processes());
-		return modelAndView;
+		return getProcesses();
 	}
 	
 	@RequestMapping("/startApi")
@@ -111,9 +107,7 @@ public class ShackController {
 	@RequestMapping("/stop")
 	public ModelAndView stop() {
 		pm2.stopPm2();
-		ModelAndView modelAndView = new ModelAndView("shack/partials/processes");
-		modelAndView.addObject("processes", pm2.getPm2Processes());
-		return modelAndView;
+		return getProcesses();
 	}
 	
 	@RequestMapping("/kill")
