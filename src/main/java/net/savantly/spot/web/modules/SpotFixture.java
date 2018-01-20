@@ -1,4 +1,4 @@
-package net.savantly.shack.web.modules;
+package net.savantly.spot.web.modules;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,11 +9,11 @@ import net.savantly.sprout.core.security.privilege.Privilege;
 import net.savantly.sprout.core.security.privilege.PrivilegeRepository;
 
 @Service
-public class ShackFixture {
-	static final String MENU_ID = "SHACK";
-	static final String MENU_NAME = "Shack";
-	static final String EDIT_PRIVILEGE = "EDIT_SHACK";
-	static final String READ_PRIVILEGE = "READ_SHACK";
+public class SpotFixture {
+	static final String MENU_ID = "SPOT";
+	static final String MENU_NAME = "Spot";
+	static final String EDIT_PRIVILEGE = "EDIT_SPOT";
+	static final String READ_PRIVILEGE = "READ_SPOT";
 
 	@Autowired
 	private MenuRepository menuRepository;
@@ -22,10 +22,10 @@ public class ShackFixture {
 
 	public void install() throws Exception {
 		ensureMenuItemsExist();
-		ensureWikiPrivilegesExist();
+		ensurePrivilegesExist();
 	}
 	
-	private void ensureWikiPrivilegesExist() {
+	private void ensurePrivilegesExist() {
 		if (privileges.findOne(READ_PRIVILEGE) == null) {
 			privileges.save(new Privilege(READ_PRIVILEGE));
 		}
@@ -41,7 +41,7 @@ public class ShackFixture {
 			menu.setIcon("bookmark");
 			menu.setId(MENU_ID);
 			menu.setDisplayText(MENU_NAME);
-			menu.setUrl("/plugins;id="+ShackModule.BEAN_NAME);
+			menu.setUrl("/plugins;id="+SpotModule.BEAN_NAME);
 			menuRepository.save(menu);
 		}
 	}

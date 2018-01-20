@@ -1,4 +1,4 @@
-package net.savantly.shack.web.modules;
+package net.savantly.spot.web.modules;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,21 +10,21 @@ import net.savantly.sprout.core.module.SproutModuleAdapter;
 import net.savantly.sprout.core.module.SproutModuleExecutionResponse;
 
 @Component
-public class ShackModule extends SproutModuleAdapter {
+public class SpotModule extends SproutModuleAdapter {
 	
-	public static final String BEAN_NAME = "shackModule";
+	public static final String BEAN_NAME = "spotModule";
 	
-	private static final Logger log = LoggerFactory.getLogger(ShackModule.class);
+	private static final Logger log = LoggerFactory.getLogger(SpotModule.class);
 	private static final String VERSION = "0.0.1";
-	private static final String NAME = "shack";
-	private static final String PATH = "/rest/modules/shack/";
-	private static final String DESCRIPTION = "A PM2 management interface for the Sprout platform.";
+	private static final String NAME = "spot";
+	private static final String PATH = "/rest/modules/spot/";
+	private static final String DESCRIPTION = "Web interface for a graph abstraction of networked objects";
 	
 	@Autowired
-	private ShackFixture fixture;
+	private SpotFixture fixture;
 
-	public ShackModule() {
-		log.info("Instantiated ShackModule");
+	public SpotModule() {
+		log.info("Instantiated SpotModule");
 	}
 
 	@Override

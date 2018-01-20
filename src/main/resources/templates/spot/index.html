@@ -1,0 +1,32 @@
+<#import "/spring.ftl" as spring />
+<div id="spotContainer">
+	<nav>
+		<button class="mat-raised-button" onclick="spot.helloWorld();">Do Something</button>
+	</nav>
+	
+	<div class="spot-content"></div>
+
+</div>
+
+
+<script type="text/javascript">
+	function Spot() {
+
+		var contentElement = document.querySelector('.spot-content');
+		
+		this.helloWorld = function(){
+			sprout.showLoader({fullScreen: true});
+			sprout.zone.run(function(){
+				sprout.http.get('./rest/modules/spot/hello', {responseType: 'text'}).subscribe(function(response){
+					contentElement.innerHTML = response;
+					sprout.hideLoader();
+				}, function(err){
+					console.error(err);
+					contentElement.innerHTML = err.error;
+					sprout.hideLoader();
+				});
+			});
+		};
+	}
+	window.spot = new Spot();
+</script>

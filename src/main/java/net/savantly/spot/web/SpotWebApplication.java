@@ -1,12 +1,12 @@
-package net.savantly.shack.web;
+package net.savantly.spot.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ShackWebApplication {
+public class SpotWebApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ShackWebApplication.class, args);
+		SpringApplication.run(SpotWebApplication.class, args);
 	}
 }

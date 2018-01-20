@@ -1,4 +1,4 @@
-package net.savantly.shack.web;
+package net.savantly.spot.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -16,11 +16,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import net.savantly.spot.web.SpotWebApplication;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes={ShackWebApplication.class})
+@SpringBootTest(classes={SpotWebApplication.class})
 @WebAppConfiguration
-public class ShackWebApplicationTests {
-	Logger log = LoggerFactory.getLogger(ShackWebApplicationTests.class);
+public class SpotWebApplicationTests {
+	Logger log = LoggerFactory.getLogger(SpotWebApplicationTests.class);
 	
 	@Autowired
 	WebApplicationContext ctx;
@@ -36,7 +38,7 @@ public class ShackWebApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		ShackWebApplication bean = ctx.getBean(ShackWebApplication.class);
+		SpotWebApplication bean = ctx.getBean(SpotWebApplication.class);
 		log.debug("{}", bean);
 	}
 	
