@@ -1,4 +1,4 @@
-package net.savantly.spot.web.modules.autoconfigure;
+package net.savantly.spot.web.configuration;
 
 import javax.annotation.PostConstruct;
 

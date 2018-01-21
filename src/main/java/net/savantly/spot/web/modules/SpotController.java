@@ -1,9 +1,15 @@
 package net.savantly.spot.web.modules;
 
+import java.util.Map;
+
+import org.apache.tinkerpop.gremlin.structure.Graph;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -23,6 +29,9 @@ public class SpotController {
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	}
 
+	@Autowired
+	Graph g;
+	
 	@RequestMapping("/")
 	public ModelAndView index() {
 		ModelAndView modelAndView = new ModelAndView("spot/index");
@@ -33,6 +42,14 @@ public class SpotController {
 	public ModelAndView hello() {
 		ModelAndView modelAndView = new ModelAndView("spot/partials/text");
 		modelAndView.addObject("text", "<h1>Hello World</h1>");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/vertex", method=RequestMethod.POST)
+	public ModelAndView addVertex(Map<String, String> options) {
+		Vertex v = g.addVertex(options.get("label"));
+		ModelAndView modelAndView = new ModelAndView("spot/partials/text");
+		modelAndView.addObject("text", v.toString());
 		return modelAndView;
 	}
 	
