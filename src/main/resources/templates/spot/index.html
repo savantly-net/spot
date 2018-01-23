@@ -268,17 +268,29 @@
 			});
 		};
 		
-		window.graphShapes = new GraphShapes();
-		init_property_bar();
-		// Create the graph canvas in the chosen div element
-		graph_viz.init("#main");
-		// Add the zoom layer to the graph
-		//var svg_graph = 
-		graph_viz.addzoom();
-		//graph_viz.layers.set_nb_layers(4);
+		this.init = function(){
+			sprout.showLoader({fullScreen: true});
+			sprout.zone.run(function(){
+				window.graphShapes = new GraphShapes();
+				init_property_bar();
+				// Create the graph canvas in the chosen div element
+				graph_viz.init("#main");
+				// Add the zoom layer to the graph
+				//var svg_graph = 
+				graph_viz.addzoom();
+				//graph_viz.layers.set_nb_layers(4);
 
-		// Create the info box for node details
-		infobox.create("#graphInfo","#nodeInfo"); // from module in infobox.js
+				// Create the info box for node details
+				infobox.create("#graphInfo","#nodeInfo"); // from module in infobox.js
+				sprout.hideLoader();
+			});
+		};
+		
+		setTimeout(function() {
+			spot.init();
+		}, 2000);
 	}
-	//window.spot = new Spot();
+	
+	window.spot = new Spot();
+
 </script>
