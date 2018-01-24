@@ -29,103 +29,26 @@ var graphioGremlin = (function(){
 	function get_edge_properties(){
 		return _edge_properties;
 	}
-        
-        function create_single_command(query){
-            var equalIndex = query.indexOf("=");
-            var semiColonIndex = query.indexOf(";");
-            if( equalIndex >= 0){
-                if(semiColonIndex < 0){
-                    query = query.substring(equalIndex+1);
-                } else {
-                    query = query.substring(equalIndex+1,semiColonIndex);
-                }
-            }
-            var returnQuery = query.trim()+".toList();";
-            return returnQuery;
-        }
 
 	function get_graph_info(){
-		var gremlin_query_nodes = "nodes = g.V().groupCount().by(label);"
-		var gremlin_query_edges = "edges = g.E().groupCount().by(label);"
-		var gremlin_query_nodes_prop = "nodesprop = g.V().valueMap().select(keys).groupCount();"
-		var gremlin_query_edges_prop = "edgesprop = g.E().valueMap().select(keys).groupCount();"
-		
-		var gremlin_query = gremlin_query_nodes+gremlin_query_nodes_prop
-			+gremlin_query_edges+gremlin_query_edges_prop
-			+ "[nodes.toList(),nodesprop.toList(),edges.toList(),edgesprop.toList()]"
-		// while busy, show we're doing something in the messageArea.
 		$('#messageArea').html('<h3>(loading)</h3>');
-		var message = "<p> Graph info</p>"
-                if(SINGLE_COMMANDS_AND_NO_VARS){
-                    var node_label_query = create_single_command(gremlin_query_nodes);
-                    var edge_label_query = create_single_command(gremlin_query_edges);
-                    var node_prop_query = create_single_command(gremlin_query_nodes_prop);
-                    var edge_prop_query = create_single_command(gremlin_query_edges_prop);
-                    send_to_server(node_label_query, null, null, null, function(nodeLabels){
-                       send_to_server(edge_label_query, null, null, null, function(edgeLabels){
-                           send_to_server(node_prop_query, null, null, null, function(nodeProps){
-                               send_to_server(edge_prop_query, null, null, null, function(edgeProps){
-                                   var combinedData = [nodeLabels, nodeProps, edgeLabels, edgeProps];
-                                   console.log("Combined data", combinedData);                                   
-                                   handle_server_answer(combinedData,'graphInfo',null,message);
-                               });
-                           });
-                       }); 
-                    });
-                } else {
-                    send_to_server(gremlin_query,'graphInfo',null,message)
-                }
+		var message = "<p> Graph info</p>";
+		send_to_server('','graphInfo',null,message);
 	}
-
-
 
 	function search_query() {
 		// Preprocess query
 		var input_string = $('#search_value').val();
 		var input_field = $('#search_field').val();
-		//console.log(input_field)
-	 	var filtered_string = input_string;//You may add .replace(/\W+/g, ''); to refuse any character not in the alphabet
-	 	if (filtered_string.length>50) filtered_string = filtered_string.substring(0,50); // limit string length
-		// Translate to Gremlin query
-                var gremlin_query_nodes = null;
-                var gremlin_query_edges = null;
-	  	if (input_string==""){
-	  		gremlin_query_nodes = "nodes = g.V().limit("+node_limit_per_request+")"
-                        gremlin_query_edges = "edges = g.V().limit("+node_limit_per_request+").aggregate('node').outE().as('edge').inV().where(within('node')).select('edge')"
-	  		var gremlin_query = gremlin_query_nodes+"\n"+gremlin_query_edges+"\n"+"[nodes.toList(),edges.toList()]"
-
-	  			  	}
-	  	else{
-	  		if (isInt(input_string)){
-	  			var has_str = "has('"+input_field+"',"+filtered_string+")"
-	  		} else {
-	  			var has_str = "has('"+input_field+"','"+filtered_string+"')"
-	  		}
-			var gremlin_query = "g.V()."+has_str
-	  		gremlin_query_nodes = "nodes = g.V()."+has_str
-	  		gremlin_query_edges = "edges = g.V()."+has_str
-	  			+".aggregate('node').outE().as('edge').inV().where(within('node')).select('edge')"
-	  		var gremlin_query = gremlin_query_nodes+"\n"+gremlin_query_edges+"\n"+"[nodes.toList(),edges.toList()]"
-	  		console.log(gremlin_query)
-		}
+		var options = {
+			field: input_field,
+			text: input_string
+		};
 
 	  	// while busy, show we're doing something in the messageArea.
 	  	$('#messageArea').html('<h3>(loading)</h3>');
-		var message = "<p>Query: '"+ filtered_string +"'</p>"
-                if(SINGLE_COMMANDS_AND_NO_VARS){
-                    var nodeQuery = create_single_command(gremlin_query_nodes);                    
-                    var edgeQuery = create_single_command(gremlin_query_edges);
-                    console.log("Node query: "+nodeQuery);
-                    console.log("Edge query: "+edgeQuery);
-                    send_to_server(nodeQuery, null, null, null, function(nodeData){
-                        send_to_server(edgeQuery, null, null, null, function(edgeData){
-                            var combinedData = [nodeData,edgeData];
-                            handle_server_answer(combinedData, 'search', null, message);
-                        });
-                    });
-                } else {
-                    send_to_server(gremlin_query,'search',null,message)	  	
-                }
+		var message = "<p>Query: '"+ input_string +"'</p>";
+		send_to_server('search', options,'search',null,message);
 	}
 
 	function isInt(value) {
@@ -146,19 +69,8 @@ var graphioGremlin = (function(){
 	  	var gremlin_query = gremlin_query_nodes+"\n"+gremlin_query_edges+"\n"+"[nodes.toList(),edges.toList()]"
 		// while busy, show we're doing something in the messageArea.
 		$('#messageArea').html('<h3>(loading)</h3>');
-		var message = "<p>Query ID: "+ d.id +"</p>"
-                if(SINGLE_COMMANDS_AND_NO_VARS){
-                    var nodeQuery = create_single_command(gremlin_query_nodes);
-                    var edgeQuery = create_single_command(gremlin_query_edges);
-                    send_to_server(nodeQuery, null, null, null, function(nodeData){
-                        send_to_server(edgeQuery, null, null, null, function(edgeData){
-                            var combinedData = [nodeData,edgeData];
-                            handle_server_answer(combinedData, 'click', d.id, message);
-                        });
-                    });
-                } else {
-                    send_to_server(gremlin_query,'click',d.id,message);
-                }
+		var message = "<p>Query ID: "+ d.id +"</p>";
+		send_to_server(gremlin_query,'click',d.id,message);
 	}
 
 	function send_to_server(gremlin_query,query_type,active_node,message, callback){
@@ -178,7 +90,7 @@ var graphioGremlin = (function(){
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	// AJAX request for the REST API
 	////////////////////////////////////////////////////////////////////////////////////////////////
-	function run_ajax_request(gremlin_query,query_type,active_node,message, callback){
+	function run_ajax_request(endpoint, options, query_type,active_node,message, callback){
 		// while busy, show we're doing something in the messageArea.
 		$('#messageArea').html('<h3>(loading)</h3>');
 
@@ -187,10 +99,10 @@ var graphioGremlin = (function(){
 			type: "POST",
 			accept: "application/json",
 			//contentType:"application/json; charset=utf-8",
-			url: "http://"+HOST+":"+PORT,
+			url: 'rest/modules/graphexp/' + endpoint, 
 			//headers: GRAPH_DATABASE_AUTH,
 			Timeout:2000,
-			data: JSON.stringify({"gremlin" : gremlin_query}),
+			data: JSON.stringify(options),
 			success: function(data, textStatus, jqXHR){
                             var Data = data.result.data;
                             //console.log(Data)
