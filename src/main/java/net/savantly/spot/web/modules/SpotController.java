@@ -16,6 +16,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import net.savantly.spot.web.configuration.JanusGraphConfiguration;
+
 @RequestMapping("/rest/modules/spot")
 @Controller
 public class SpotController {
@@ -30,7 +32,7 @@ public class SpotController {
 	}
 
 	@Autowired
-	Graph g;
+	private JanusGraphConfiguration config;
 	
 	@RequestMapping("/")
 	public ModelAndView index() {
@@ -47,7 +49,7 @@ public class SpotController {
 	
 	@RequestMapping(value = "/vertex", method=RequestMethod.POST)
 	public ModelAndView addVertex(Map<String, String> options) {
-		Vertex v = g.addVertex(options.get("label"));
+		Vertex v = config.getGraph().addVertex(options.get("label"));
 		ModelAndView modelAndView = new ModelAndView("spot/partials/text");
 		modelAndView.addObject("text", v.toString());
 		return modelAndView;

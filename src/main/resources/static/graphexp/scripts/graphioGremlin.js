@@ -33,7 +33,7 @@ var graphioGremlin = (function(){
 	function get_graph_info(){
 		$('#messageArea').html('<h3>(loading)</h3>');
 		var message = "<p> Graph info</p>";
-		send_to_server('','graphInfo',null,message);
+		send_to_server('', {},'graphInfo',null,message);
 	}
 
 	function search_query() {
@@ -42,7 +42,8 @@ var graphioGremlin = (function(){
 		var input_field = $('#search_field').val();
 		var options = {
 			field: input_field,
-			text: input_string
+			text: input_string,
+			limit: $('#nbLayers').val() || 3
 		};
 
 	  	// while busy, show we're doing something in the messageArea.
@@ -64,13 +65,10 @@ var graphioGremlin = (function(){
                 if(isNaN(id)){
                     id = "'"+id+"'";
                 }
-		var gremlin_query_nodes = "nodes = g.V("+id+").as('node').both().as('node').select(all,'node').inject(g.V("+id+")).unfold()"
-	  	var gremlin_query_edges = "edges = g.V("+id+").bothE()"
-	  	var gremlin_query = gremlin_query_nodes+"\n"+gremlin_query_edges+"\n"+"[nodes.toList(),edges.toList()]"
 		// while busy, show we're doing something in the messageArea.
 		$('#messageArea').html('<h3>(loading)</h3>');
 		var message = "<p>Query ID: "+ d.id +"</p>";
-		send_to_server(gremlin_query,'click',d.id,message);
+		send_to_server('node/'+d.id, {},'click',d.id,message);
 	}
 
 	function send_to_server(gremlin_query,query_type,active_node,message, callback){
@@ -98,18 +96,16 @@ var graphioGremlin = (function(){
 		$.ajax({
 			type: "POST",
 			accept: "application/json",
-			//contentType:"application/json; charset=utf-8",
+			contentType:"application/json; charset=utf-8",
 			url: 'rest/modules/graphexp/' + endpoint, 
 			//headers: GRAPH_DATABASE_AUTH,
 			Timeout:2000,
 			data: JSON.stringify(options),
 			success: function(data, textStatus, jqXHR){
-                            var Data = data.result.data;
-                            //console.log(Data)
                             if(callback){
-                                callback(Data);
+                                callback(data);
                             } else {				
-                                handle_server_answer(Data,query_type,active_node,message);
+                                handle_server_answer(data,query_type,active_node,message);
                             }
 			},
 			failure: function(msg){
@@ -181,9 +177,14 @@ var graphioGremlin = (function(){
 			var arrange_data = arrange_datav2;
 		}
 		if (query_type=='graphInfo'){
-			infobox.display_graph_info(data);
-			_node_properties = make_properties_list(data[1][0]);
-			_edge_properties = make_properties_list(data[3][0]);
+			infobox.display_graph_info({
+				nodes: data.nodes[0],
+				edges: data.edges[0],
+				nodesprop: data.nodesprop[0],
+				edgesprop: data.edgesprop[0]
+			});
+			_node_properties = make_properties_list(data.nodesprop[0]);
+			_edge_properties = make_properties_list(data.edgesprop[0]);
 			change_nav_bar(_node_properties,_edge_properties);
 			display_properties_bar(_node_properties,'nodes','Node properties:');
 			display_properties_bar(_edge_properties,'edges','Edge properties:');
@@ -191,7 +192,7 @@ var graphioGremlin = (function(){
 		} else {
 			//console.log(data);
 			var graph = arrange_data(data);
-			//console.log(graph)
+			console.log(graph)
 			if (query_type=='click') var center_f = 0; //center_f=0 mean no attraction to the center for the nodes 
 			else if (query_type=='search') var center_f = 1;
 			else return;

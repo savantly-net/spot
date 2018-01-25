@@ -3,16 +3,17 @@ package net.savantly.spot.web.configuration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.janusgraph.core.JanusGraph;
 import org.janusgraph.core.JanusGraphFactory;
-import org.janusgraph.example.GraphOfTheGodsFactory;
+import org.janusgraph.diskstorage.BackendException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -21,18 +22,19 @@ public class JanusGraphConfiguration {
 
 	private static final Logger log = LoggerFactory.getLogger(JanusGraphConfiguration.class);
 	private Map<String, String> server = new HashMap<String, String>();
-	private boolean loadDemo = false;
-
-	@Bean
-	public Graph graph() {
-		JanusGraph graph = JanusGraphFactory.open(janusServerConfiguration());
-		if (loadDemo) {
-			GraphOfTheGodsFactory.load(graph);
-		}
-		return graph;
+	private JanusGraph graph;
+	
+	@PostConstruct
+	public void postConstruct() {
+		this.graph = JanusGraphFactory.open(janusServerConfiguration());
 	}
 	
-	@Bean
+	public JanusGraph clearGraph() throws BackendException {
+		JanusGraphFactory.drop(this.graph);
+		postConstruct();
+		return this.graph;
+	}
+	
 	public GraphTraversalSource traversalSource(Graph graph) {
 		GraphTraversalSource g = graph.traversal();
 		return g;
@@ -52,6 +54,10 @@ public class JanusGraphConfiguration {
 
 	public void setServer(Map<String, String> server) {
 		this.server = server;
+	}
+	
+	public JanusGraph getGraph() {
+		return this.graph;
 	}
 
 }

@@ -60,18 +60,14 @@ var infobox = (function(){
 	function display_graph_info(data){
 		_table_Graphinfo.select("tbody").remove();
 	  	var info_table = _table_Graphinfo.append("tbody");
-	  	var data_to_display = data[0][0];
 	  	append_keysvalues(info_table,{"Node labels":""},"bold");
-	  	append_keysvalues(info_table,data_to_display,"normal");
-	  	data_to_display = data[1][0];
+	  	append_keysvalues(info_table,data.nodes,"normal");
 	  	append_keysvalues(info_table,{"Nodes properties":""},"bold");
-	  	append_keysvalues(info_table,data_to_display,"normal");
-	  	var data_to_display = data[2][0];
+	  	append_keysvalues(info_table,data.nodesprop,"normal");
 	  	append_keysvalues(info_table,{"Edge labels":""},"bold");
-	  	append_keysvalues(info_table,data_to_display,"normal");
-	  	data_to_display = data[3][0];
+	  	append_keysvalues(info_table,data.edges,"normal");
 	  	append_keysvalues(info_table,{"Edge properties":""},"bold");
-	  	append_keysvalues(info_table,data_to_display,"normal");
+	  	append_keysvalues(info_table,data.edgesprop,"normal");
 	}
 
 	function append_keysvalues(table_body,data,type){

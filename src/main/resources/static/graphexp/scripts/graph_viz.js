@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Main module. Handle the viualization, display data and layers.
+// Main module. Handle the visualization, display data and layers.
 
 var graph_viz = (function(){
 	"use strict";
@@ -138,7 +138,7 @@ var graph_viz = (function(){
 	var layers = (function(){
 		// Submodule that handles layers of visualization
 
-		var nb_layers = default_nb_of_layers;
+		var nb_layers = default_nb_of_layers || 3;
 		var old_Nodes = [];
 		var old_Links = [];
 
