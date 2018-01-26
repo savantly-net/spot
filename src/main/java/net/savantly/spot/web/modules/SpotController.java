@@ -1,9 +1,13 @@
 package net.savantly.spot.web.modules;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
+import org.janusgraph.core.JanusGraph;
+import org.janusgraph.core.PropertyKey;
+import org.janusgraph.core.schema.JanusGraphManagement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.savantly.spot.web.configuration.JanusGraphConfiguration;
+import net.savantly.spot.web.modules.graphexp.GraphExpService;
 
 @RequestMapping("/rest/modules/spot")
 @Controller
@@ -33,10 +38,20 @@ public class SpotController {
 
 	@Autowired
 	private JanusGraphConfiguration config;
+	@Autowired
+	private GraphExpService graphExpService;
 	
 	@RequestMapping("/")
 	public ModelAndView index() {
+		JanusGraph graph = config.getGraph();
+		JanusGraphManagement mgmt = graph.openManagement();
+		Iterable<PropertyKey> keys = mgmt.getRelationTypes(PropertyKey.class);
+		List<String> vertexKeys = new ArrayList<>();
+		keys.forEach(k -> {
+			vertexKeys.add(k.toString());
+		});
 		ModelAndView modelAndView = new ModelAndView("spot/index");
+		modelAndView.addObject("keys", vertexKeys);
 		return modelAndView;
 	}
 	

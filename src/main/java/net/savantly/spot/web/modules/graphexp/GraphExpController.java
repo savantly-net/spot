@@ -1,4 +1,4 @@
-package net.savantly.spot.web.modules;
+package net.savantly.spot.web.modules.graphexp;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,6 +40,8 @@ public class GraphExpController {
 
 	@Autowired
 	private JanusGraphConfiguration config;
+	@Autowired
+	private GraphExpService graphExpService;
 	private ObjectMapper mapper = GraphSONMapper.build()
 			.addRegistry(JanusGraphIoRegistry.getInstance())
 			.version(GraphSONVersion.V1_0).create().createMapper();
@@ -57,21 +59,7 @@ public class GraphExpController {
 
 	@RequestMapping(value="/", method= {RequestMethod.GET, RequestMethod.POST})
 	public JsonNode graphInfo() throws IOException {
-		final GraphTraversalSource g = config.getGraph().traversal();
-		
-		Map<String, Object> data = new HashMap<>();
-
-		List<Map<Object, Long>> nodes = g.V().groupCount().by(T.label).toList();
-		List<Map<Object, Long>> edges = g.E().groupCount().by(T.label).toList();
-		List<Map<Object, Long>> nodesprop = g.V().valueMap().select(Column.keys).groupCount().toList();
-		List<Map<Object, Long>> edgesprop = g.E().valueMap().select(Column.keys).groupCount().toList();
-
-		data.put("nodes", nodes);
-		data.put("edges", edges);
-		data.put("nodesprop", nodesprop);
-		data.put("edgesprop", edgesprop);
-
-		JsonNode json = serialize(data);
+		JsonNode json = serialize(graphExpService.getGraphInfo());
 		return json;
 	}
 

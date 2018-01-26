@@ -1,4 +1,4 @@
-package net.savantly.spot.web.modules;
+package net.savantly.spot.web.modules.graphexp;
 
 public class SearchOptions {
 	private int limit;
