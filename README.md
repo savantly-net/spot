@@ -5,11 +5,12 @@
 Visualization was politely stolen from GraphExp  
 Graphexp is a lightweight web interface to explore and display a graph stored in a Gremlin graph database, via the Gremlin server (version 3.2.x or 3.3.x) .
 
-Graphexp is under the Apache 2.0 license.
+Graphexp is under the Apache 2.0 license.  
+A live demo of Graphexp is available on the [project Github page](https://bricaud.github.io/graphexp/).
 
-![graphexp](https://github.com/bricaud/graphexp/blob/master/images/graphexp2.png "Graph exploration")
+![spot](https://github.com/savantly-net/spot/blob/master/examples/example.PNG) 
 
-A live demo of Graphexp is available on the [project Github page](https://bricaud.github.io/graphexp/). See the [Tutorial](#tutorial-with-the-tree-of-life) section below.
+A live demo of Graphexp is available on the [project Github page](https://bricaud.github.io/graphexp/).  
 
 ## Getting started  
 
