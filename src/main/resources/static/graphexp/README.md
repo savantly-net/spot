@@ -8,6 +8,8 @@ Graphexp is under the Apache 2.0 license.
 
 A live demo of Graphexp is available on the [project Github page](https://bricaud.github.io/graphexp/). See the [Tutorial](#tutorial-with-the-tree-of-life) section below.
 
+![spot](./examples/example.PNG)
+
 ## Configuration
 
 To use Graph Explorer, you need a [Gremlin server](http://tinkerpop.apache.org/) running with REST or websocket protocol and a *recent* web browser to display the visualization.

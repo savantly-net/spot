@@ -43,7 +43,7 @@ var graphioGremlin = (function(){
 		var options = {
 			field: input_field,
 			text: input_string,
-			limit: $('#nbLayers').val() || 3
+			limit: 50
 		};
 
 	  	// while busy, show we're doing something in the messageArea.
