@@ -48,28 +48,8 @@
 
 		<dependency>
 			<groupId>org.janusgraph</groupId>
-			<artifactId>janusgraph-es</artifactId>
-			<version>${janusgraph.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janusgraph</groupId>
 			<artifactId>janusgraph-lucene</artifactId>
 			<version>${janusgraph.version}</version>
-		</dependency>
-
-
-		<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-analyzers-common -->
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-analyzers-common</artifactId>
-			<version>${lucene.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.lucene</groupId>
-					<artifactId>lucene-core</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.tinkerpop/gremlin-driver -->
@@ -99,16 +79,6 @@
 	<build>
 		<plugins></plugins>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>embedded-es</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<!-- TODO: For now an external ES instance is required -->
-		</profile>
-	</profiles>
 
 	<description>Web interface for a graph abstraction of networked objects</description>
 </project>

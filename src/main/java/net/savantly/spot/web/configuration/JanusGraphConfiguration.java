@@ -3,6 +3,8 @@ package net.savantly.spot.web.configuration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Graph;
@@ -22,6 +24,7 @@ public class JanusGraphConfiguration {
 	private Map<String, String> server = new HashMap<String, String>();
 	private JanusGraph graph;
 
+	@PostConstruct
 	private void openGraph() {
 		this.graph = JanusGraphFactory.open(janusServerConfiguration());
 	}
