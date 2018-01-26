@@ -10,7 +10,6 @@ A live demo of Graphexp is available on the [project Github page](https://bricau
 
 ![spot](https://github.com/savantly-net/spot/blob/master/examples/example.PNG) 
 
-A live demo of Graphexp is available on the [project Github page](https://bricaud.github.io/graphexp/).  
 
 ## Getting started  
 
