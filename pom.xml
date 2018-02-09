@@ -25,6 +25,11 @@
 		<janusgraph.version>0.2.0</janusgraph.version>
 		<tinkerpop.version>3.2.6</tinkerpop.version>
 		<lucene.version>7.0.0</lucene.version>
+		<!-- Setting {custom.ui = true} means we will provide our own front-end -->
+		<custom.ui>true</custom.ui>
+		<ui.dist.folder>${basedir}/dist</ui.dist.folder>
+		<ui.root.folder>${basedir}</ui.root.folder>
+		<!-- End of custom UI properties -->
 	</properties>
 
 	<dependencies>
@@ -77,7 +82,12 @@
 	</dependencies>
 
 	<build>
-		<plugins></plugins>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
 	</build>
 
 	<description>Web interface for a graph abstraction of networked objects</description>
