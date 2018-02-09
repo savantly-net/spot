@@ -41,7 +41,7 @@ public class SpotFixture {
 			menu.setIcon("bookmark");
 			menu.setId(MENU_ID);
 			menu.setDisplayText(MENU_NAME);
-			menu.setUrl("/plugins;id="+SpotModule.BEAN_NAME);
+			menu.setUrl("/"); // TODO: map to front-end route
 			menuRepository.save(menu);
 		}
 	}
