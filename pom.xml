@@ -68,30 +68,17 @@
 			<build>
 				<plugins>
 					<plugin>
-						<!-- we'll start the front end separately from the backend. This lets 
-							us keep the backend server running, while we develop the front-end -->
-						<artifactId>maven-antrun-plugin</artifactId>
-						<configuration>
-							<environmentVariables>
-								<CHROME_BIN>${CHROME_BIN}</CHROME_BIN>
-							</environmentVariables>
-						</configuration>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>properties-maven-plugin</artifactId>
+						<version>1.0.0</version>
 						<executions>
 							<execution>
-								<id>serve front-end angular app</id>
-								<phase>compile</phase>
-								<configuration>
-									<target>
-										<property name="npm_binary" value="${npm.binary}" />
-										<exec executable="${npm_binary}" spawn="true">
-											<arg value="run" />
-											<arg value="start" />
-										</exec>
-									</target>
-								</configuration>
 								<goals>
-									<goal>run</goal>
+									<goal>set-system-properties</goal>
 								</goals>
+								<configuration>
+									<properties></properties>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
