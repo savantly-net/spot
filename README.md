@@ -5,9 +5,6 @@
 Inspired by [GraphExp](https://bricaud.github.io/graphexp/)  
 
 
-![spot](https://github.com/savantly-net/spot/blob/master/examples/example.PNG) 
-
-
 ## Getting started  
 
 To use Spot you can check out this project and run it -  
@@ -34,7 +31,7 @@ Manage which Labels are allowed for your nodes [vertices] and links [edges] usin
 
 ![label list](./examples/label_list.png)  
 
-![new label(./exmaples/new_label.png)  
+![new label(./examples/new_label.png)  
 
 ## Graph exploration and editing 
 
