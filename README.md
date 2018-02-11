@@ -31,7 +31,7 @@ Manage which Labels are allowed for your nodes [vertices] and links [edges] usin
 
 ![label list](./examples/label_list.png)  
 
-![new label(./examples/new_label.png)  
+![new label](./examples/new_label.png)  
 
 ## Graph exploration and editing 
 
