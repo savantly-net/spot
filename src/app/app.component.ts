@@ -1,3 +1,4 @@
+import { LabelService } from './graph/label.service';
 import { Component } from '@angular/core';
 import { GraphConfig, GraphexpService } from '@savantly/ngx-graphexp';
 
@@ -10,9 +11,11 @@ export class AppComponent {
 
   graphConfig: GraphConfig = new GraphConfig();
 
-  constructor (public service: GraphexpService) {
-    this.graphConfig.nodeLabels = ['god', 'titan', 'demigod', 'human', 'monster', 'location'];
-    this.graphConfig.linkLabels = ['is_father_of', 'has_pet', 'lives_in'];
+  constructor (public service: GraphexpService, private labels: LabelService) {
+    this.labels.labels.subscribe(response => {
+      this.graphConfig.nodeLabels = response.node;
+      this.graphConfig.linkLabels = response.link;
+    });
   }
 
 }
